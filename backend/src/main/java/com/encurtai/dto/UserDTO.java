@@ -1,6 +1,6 @@
 package com.encurtai.dto;
 
-public class RegisterDTO {
+public class UserDTO {
     public String email;
     public String password;
     

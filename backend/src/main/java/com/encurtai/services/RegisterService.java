@@ -4,24 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.encurtai.dto.RegisterDTO;
-import com.encurtai.models.Login;
-import com.encurtai.repository.LoginRepository;
+import com.encurtai.dto.UserDTO;
+import com.encurtai.models.User;
+import com.encurtai.repository.UserRepository;
 
 @Service
 public class RegisterService {
 
     @Autowired
-    private LoginRepository loginRepository;
+    private UserRepository loginRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    public void register(RegisterDTO register){
+    public void register(UserDTO user){
 
-            Login newLogin = new Login();
-            newLogin.setEmail(register.email);
-            newLogin.setPassword(passwordEncoder.encode(register.password));
+            User newLogin = new User();
+            newLogin.setEmail(user.email);
+            newLogin.setPassword(passwordEncoder.encode(user.password));
             loginRepository.save(newLogin);
 
     }
