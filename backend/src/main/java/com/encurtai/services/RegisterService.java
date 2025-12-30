@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.encurtai.dto.UserDTO;
+import com.encurtai.exception.EmailAlreadyExistsException;
 import com.encurtai.models.User;
 import com.encurtai.repository.UserRepository;
 
@@ -12,17 +13,20 @@ import com.encurtai.repository.UserRepository;
 public class RegisterService {
 
     @Autowired
-    private UserRepository loginRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
     
     public void register(UserDTO user){
 
-            User newLogin = new User();
-            newLogin.setEmail(user.email);
-            newLogin.setPassword(passwordEncoder.encode(user.password));
-            loginRepository.save(newLogin);
+        if (userRepository.existsByEmail(user.email)) {
+            throw new EmailAlreadyExistsException("Email já cadastrado");
+        }
 
+        User newLogin = new User();
+        newLogin.setEmail(user.email);
+        newLogin.setPassword(passwordEncoder.encode(user.password));
+        userRepository.save(newLogin);
     }
 }
