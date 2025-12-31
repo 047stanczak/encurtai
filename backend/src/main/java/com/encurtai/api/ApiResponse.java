@@ -1,6 +1,5 @@
 package com.encurtai.api;
 
-// TODO: se ApiResponse
 public record ApiResponse<T>(
     boolean success,
     int status,
@@ -17,5 +16,8 @@ public record ApiResponse<T>(
 
     public static <T> ApiResponse<T> error(int status, String message) {
         return new ApiResponse<>(false, status, message, null);
+    }
+    public static <T> ApiResponse<T> urlGenerated(String message, T hash) {
+        return new ApiResponse<T>(true, 201, message, hash);
     }
 }

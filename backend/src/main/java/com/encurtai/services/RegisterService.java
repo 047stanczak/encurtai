@@ -24,9 +24,9 @@ public class RegisterService {
             throw new EmailAlreadyExistsException("Email já cadastrado");
         }
 
-        User newLogin = new User();
-        newLogin.setEmail(user.email);
-        newLogin.setPassword(passwordEncoder.encode(user.password));
-        userRepository.save(newLogin);
+        User newUser = new User();
+        newUser.setEmail(user.email);
+        newUser.setPassword(passwordEncoder.encode(user.password));
+        userRepository.save(newUser);
     }
 }

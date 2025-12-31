@@ -11,8 +11,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.interfaces.JWTVerifier;
 import com.encurtai.models.User;
 
 @Service
@@ -46,13 +44,6 @@ public class TokenSecurity {
         } catch (JWTVerificationException exception) {
             return null;
         }
-    }
-
-    public Long getId(String token) {
-        Algorithm algorithm = Algorithm.HMAC256(secret);
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT jwt = verifier.verify(token);
-        return jwt.getClaim("id").asLong();
     }
 
     private Instant generateExpirationDate() {
