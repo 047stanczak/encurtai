@@ -20,13 +20,13 @@ public class RegisterService {
     
     public void register(UserDTO user){
 
-        if (userRepository.existsByEmail(user.email)) {
+        if (userRepository.existsByEmail(user.email())) {
             throw new EmailAlreadyExistsException("Email já cadastrado");
         }
 
         User newUser = new User();
-        newUser.setEmail(user.email);
-        newUser.setPassword(passwordEncoder.encode(user.password));
+        newUser.setEmail(user.email());
+        newUser.setPassword(passwordEncoder.encode(user.password()));
         userRepository.save(newUser);
     }
 }

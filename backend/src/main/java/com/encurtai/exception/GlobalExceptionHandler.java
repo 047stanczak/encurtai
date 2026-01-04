@@ -28,4 +28,11 @@ public class GlobalExceptionHandler {
                 .status(401)
                 .body(ApiResponse.error(401, ex.getMessage()));
     }
+
+    @ExceptionHandler(UrlDuplicatedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleUrlDuplicated(UrlDuplicatedException ex) {
+        return ResponseEntity
+                .status(409)
+                .body(ApiResponse.error(409, ex.getMessage()));
+    }
 }

@@ -23,14 +23,14 @@ public class LoginService {
     private TokenSecurity tokenSecurity;
 
     public String login(UserDTO user){
-        User userEntity = userRepository.findByEmail(user.getEmail());
+        User userEntity = userRepository.findByEmail(user.email());
 
         if (userEntity == null) {
             throw new UserNotFoundException("Usuário não encontrado");
         }
 
         boolean passwordMatches = passwordEncoder.matches(
-                user.getPassword(),
+                user.password(),
                 userEntity.getPassword()
         );
         

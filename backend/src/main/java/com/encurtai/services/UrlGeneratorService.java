@@ -9,7 +9,7 @@ import com.encurtai.models.User;
 import com.encurtai.repository.UrlRepository;
 
 @Service
-public class UrlGeneratorService {
+public class  UrlGeneratorService {
 
     @Autowired
     private UrlRepository urlRepository;
@@ -17,12 +17,18 @@ public class UrlGeneratorService {
     @Autowired
     private ShortCodeGeneratorService shortCodeGeneratorService;
 
+    @Autowired
+    private UrlVerifier urlVerifier;
+
     public String generator(UrlGeneratorDTO url, User user){
+
+        urlVerifier.urlDuplicate(url.url(), user);
+
         String hash = shortCodeGeneratorService.generate();
 
         Url newUrl = new Url();
         newUrl.setHash(hash);
-        newUrl.setUrl(url.getUrl());
+        newUrl.setUrl(url.url());
         newUrl.setUser(user);
         urlRepository.save(newUrl);
 
