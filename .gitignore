@@ -1,0 +1,5 @@
+### VS Code ###
+.vscode/
+
+### Database ###
+database.db
