@@ -1,5 +1,14 @@
+### Database ###
+database.db
+
+# IntelliJ / IDEs
+.idea
+*.iws
+*.iml
+*.ipr
+
 ### VS Code ###
 .vscode/
 
-### Database ###
-database.db
+# Build
+out/

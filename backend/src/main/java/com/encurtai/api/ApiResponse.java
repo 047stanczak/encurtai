@@ -14,10 +14,9 @@ public record ApiResponse<T>(
         return new ApiResponse<>(true, 200, message, null);
     }
 
-    public static <T> ApiResponse<T> error(int status, String message) {
-        return new ApiResponse<>(false, status, message, null);
-    }
-    public static <T> ApiResponse<T> urlGenerated(String message, T hash) {
-        return new ApiResponse<T>(true, 201, message, hash);
-    }
+    public static <T> ApiResponse<T> error(int status, String message) {return new ApiResponse<>(false, status, message, null);}
+
+    public static <T> ApiResponse<T> urlGenerated(String message, T hash) {return new ApiResponse<T>(true, 201, message, hash);}
+
+    public static <T> ApiResponse<T> urlDeleted(String message) {return new ApiResponse<>(true, 204, message, null);}
 }

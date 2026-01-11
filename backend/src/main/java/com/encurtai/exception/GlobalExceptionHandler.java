@@ -35,4 +35,18 @@ public class GlobalExceptionHandler {
                 .status(409)
                 .body(ApiResponse.error(409, ex.getMessage()));
     }
+
+    @ExceptionHandler(UrlByIdNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleUrlByIdNotFound(UrlByIdNotFoundException ex) {
+        return ResponseEntity
+                .status(404)
+                .body(ApiResponse.error(404, ex.getMessage()));
+    }
+
+    @ExceptionHandler(UrlAccessDeniedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleUrlAccessDenied(UrlAccessDeniedException ex) {
+        return ResponseEntity
+                .status(403)
+                .body(ApiResponse.error(403, ex.getMessage()));
+    }
 }
