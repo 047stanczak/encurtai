@@ -32,6 +32,6 @@ public class UserController {
 
         userService.updateUser(user, userDTO);
 
-        return ResponseEntity.ok(ApiResponse.ok("Usuário atualizado"));
+        return ResponseEntity.ok(ApiResponse.ok("Usuário atualizado com sucesso"));
     }
 }

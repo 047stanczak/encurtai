@@ -3,7 +3,9 @@ package com.encurtai.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.encurtai.dto.OnlyUrlDTO;
 import com.encurtai.exception.UrlAccessDeniedException;
+import com.encurtai.exception.UrlByHashNotFoundException;
 import com.encurtai.exception.UrlByIdNotFoundException;
 import com.encurtai.models.Url;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,17 @@ public class UrlService {
             );
         }
         urlRepository.delete(url);
+    }
+
+    public String getUrl(String hash){
+
+        Optional<OnlyUrlDTO> originalUrl = urlRepository.findByHash(hash);
+
+        if (originalUrl.isEmpty()){
+            throw new UrlByHashNotFoundException("Url não encontrada");
+        }
+
+        return originalUrl.get().url();
     }
 
 }

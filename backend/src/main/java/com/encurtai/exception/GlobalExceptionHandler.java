@@ -49,4 +49,11 @@ public class GlobalExceptionHandler {
                 .status(403)
                 .body(ApiResponse.error(403, ex.getMessage()));
     }
+
+    @ExceptionHandler(UrlByHashNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleUrlByHashNotFound(UrlByHashNotFoundException ex) {
+        return ResponseEntity
+                .status(404)
+                .body(ApiResponse.error(404, ex.getMessage()));
+    }
 }

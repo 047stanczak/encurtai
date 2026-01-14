@@ -20,15 +20,19 @@ public class  UrlGeneratorService {
     @Autowired
     private UrlVerifier urlVerifier;
 
-    public String generator(UrlGeneratorDTO url, User user){
+    public String generator(String url, User user){
 
-        urlVerifier.urlDuplicate(url.url(), user);
+        urlVerifier.urlDuplicate(url, user);
+
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "https://" + url;
+        }
 
         String hash = shortCodeGeneratorService.generate();
 
         Url newUrl = new Url();
         newUrl.setHash(hash);
-        newUrl.setUrl(url.url());
+        newUrl.setUrl(url);
         newUrl.setUser(user);
         urlRepository.save(newUrl);
 
