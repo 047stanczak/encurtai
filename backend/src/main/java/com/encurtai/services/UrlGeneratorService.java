@@ -1,5 +1,6 @@
 package com.encurtai.services;
 
+import com.encurtai.validation.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +23,15 @@ public class  UrlGeneratorService {
 
     public String generator(String url, User user){
 
-        urlVerifier.urlDuplicate(url, user);
+        String validUrl = UrlValidator.validateAndNormalize(url);
 
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            url = "https://" + url;
-        }
+        urlVerifier.urlDuplicate(validUrl, user);
 
         String hash = shortCodeGeneratorService.generate();
 
         Url newUrl = new Url();
         newUrl.setHash(hash);
-        newUrl.setUrl(url);
+        newUrl.setUrl(validUrl);
         newUrl.setUser(user);
         urlRepository.save(newUrl);
 

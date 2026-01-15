@@ -19,11 +19,9 @@ public class SecurityConfig {
         httpSecurity
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login",
-                    "/register",
-                        "/**"
+                .requestMatchers("/login", "/register", "/{hash}"
                 ).permitAll()
-                .anyRequest().authenticated()
+                    .requestMatchers("/api/**").authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
             return httpSecurity.build();

@@ -16,10 +16,13 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false, updatable = false)
     private String hash;
 
+    @Column(nullable = false, updatable = false)
     private String url;
+
+    private long views = 0;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -53,7 +56,12 @@ public class Url {
         return user;
     }
 
+    public Long getViews() {return views;}
+
+    public void setViews(Long views) {this.views = views;}
+
     public void setUser(User user) {
         this.user = user;
     }
+
 }

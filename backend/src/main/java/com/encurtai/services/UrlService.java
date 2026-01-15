@@ -3,11 +3,11 @@ package com.encurtai.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.encurtai.dto.OnlyUrlDTO;
 import com.encurtai.exception.UrlAccessDeniedException;
 import com.encurtai.exception.UrlByHashNotFoundException;
 import com.encurtai.exception.UrlByIdNotFoundException;
 import com.encurtai.models.Url;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,15 +41,19 @@ public class UrlService {
         urlRepository.delete(url);
     }
 
+    @Transactional
     public String getUrl(String hash){
 
-        Optional<OnlyUrlDTO> originalUrl = urlRepository.findByHash(hash);
+        Url url = urlRepository.findByHash(hash)
+                .orElseThrow(() -> new UrlByHashNotFoundException("Url não encontrada"));
 
-        if (originalUrl.isEmpty()){
-            throw new UrlByHashNotFoundException("Url não encontrada");
-        }
+        increaseView(url);
 
-        return originalUrl.get().url();
+        return url.getUrl();
+    }
+
+    public void increaseView(Url url){
+        url.setViews(url.getViews() + 1);
     }
 
 }

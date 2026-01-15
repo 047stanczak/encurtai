@@ -56,4 +56,11 @@ public class GlobalExceptionHandler {
                 .status(404)
                 .body(ApiResponse.error(404, ex.getMessage()));
     }
+
+    @ExceptionHandler(InvalidUrlException.class)
+    public ResponseEntity<ApiResponse<Object>> handleInvalidUrl(InvalidUrlException ex) {
+        return ResponseEntity
+                .status(400)
+                .body(ApiResponse.error(400, ex.getMessage()));
+    }
 }

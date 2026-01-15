@@ -3,7 +3,6 @@ package com.encurtai.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.encurtai.dto.OnlyUrlDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +16,5 @@ public interface UrlRepository extends JpaRepository<Url, Long>{
     boolean existsByHash(String hash);
     List<UrlDTO> findByUser(User user);
     boolean existsByUserAndUrl(User user, String url);
-    Optional<OnlyUrlDTO> findByHash (String hash);
+    Optional<Url> findByHash (String hash);
 }

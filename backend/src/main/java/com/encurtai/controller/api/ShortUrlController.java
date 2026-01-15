@@ -1,10 +1,8 @@
-package com.encurtai.controller;
+package com.encurtai.controller.api;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +15,7 @@ import com.encurtai.services.UrlGeneratorService;
 import com.encurtai.services.UrlService;
 
 @RestController
+@RequestMapping("/api")
 public class ShortUrlController {
     @Autowired
     private UrlGeneratorService urlGeneratorService;
@@ -24,17 +23,6 @@ public class ShortUrlController {
     @Autowired
     private UrlService urlService;
 
-
-    @GetMapping("{hash}")
-    public ResponseEntity<Void> url(@PathVariable String hash){
-
-        String originalUrl = urlService.getUrl(hash);
-
-        return ResponseEntity
-                .status(HttpStatus.FOUND)
-                .header(HttpHeaders.LOCATION, originalUrl)
-                .build();
-    }
 
     @PostMapping("/url")
     public ResponseEntity<ApiResponse<Object>> urlGenerator(@RequestBody UrlGeneratorDTO urlGeneratorDTO, @AuthenticationPrincipal User user){
