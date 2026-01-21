@@ -1,7 +1,6 @@
 package com.encurtai.controller.redirect;
 
 import com.encurtai.services.UrlService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class RedirectController {
 
-    @Autowired
-    private UrlService urlService;
+    private final UrlService urlService;
+
+    public RedirectController(UrlService urlService) {
+        this.urlService = urlService;
+    }
 
     @GetMapping("{hash}")
     public ResponseEntity<Void> redirect(@PathVariable String hash) {

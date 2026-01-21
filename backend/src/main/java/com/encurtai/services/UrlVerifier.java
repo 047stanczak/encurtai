@@ -10,8 +10,11 @@ import com.encurtai.repository.UrlRepository;
 @Service
 public class UrlVerifier {
 
-    @Autowired
-    private UrlRepository urlRepository;
+    private final UrlRepository urlRepository;
+
+    public UrlVerifier(UrlRepository urlRepository) {
+        this.urlRepository = urlRepository;
+    }
 
     public void urlDuplicate(String url, User user){
 

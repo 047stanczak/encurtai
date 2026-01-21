@@ -18,9 +18,12 @@ import com.encurtai.repository.UrlRepository;
 @Service
 public class UrlService {
 
-    @Autowired
-    private UrlRepository urlRepository;
-    
+    private final UrlRepository urlRepository;
+
+    public UrlService(UrlRepository urlRepository) {
+        this.urlRepository = urlRepository;
+    }
+
     public List<UrlDTO> getUrls(User user){
 
         List<UrlDTO> urls = urlRepository.findByUser(user);

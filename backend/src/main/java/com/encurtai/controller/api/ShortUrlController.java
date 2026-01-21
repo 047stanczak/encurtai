@@ -17,11 +17,13 @@ import com.encurtai.services.UrlService;
 @RestController
 @RequestMapping("/api")
 public class ShortUrlController {
-    @Autowired
-    private UrlGeneratorService urlGeneratorService;
+    private final UrlGeneratorService urlGeneratorService;
+    private final UrlService urlService;
 
-    @Autowired
-    private UrlService urlService;
+    public ShortUrlController(UrlGeneratorService urlGeneratorService, UrlService urlService) {
+        this.urlGeneratorService = urlGeneratorService;
+        this.urlService = urlService;
+    }
 
 
     @PostMapping("/url")

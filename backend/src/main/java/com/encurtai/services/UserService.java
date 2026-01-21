@@ -15,14 +15,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final TokenSecurity tokenSecurity;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private TokenSecurity tokenSecurity;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenSecurity tokenSecurity) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenSecurity = tokenSecurity;
+    }
 
     public void register(UserDTO user){
 

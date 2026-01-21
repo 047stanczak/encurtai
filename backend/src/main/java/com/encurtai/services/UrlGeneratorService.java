@@ -12,14 +12,15 @@ import com.encurtai.repository.UrlRepository;
 @Service
 public class  UrlGeneratorService {
 
-    @Autowired
-    private UrlRepository urlRepository;
+    private final UrlRepository urlRepository;
+    private final ShortCodeGeneratorService shortCodeGeneratorService;
+    private final UrlVerifier urlVerifier;
 
-    @Autowired
-    private ShortCodeGeneratorService shortCodeGeneratorService;
-
-    @Autowired
-    private UrlVerifier urlVerifier;
+    public UrlGeneratorService(UrlRepository urlRepository, ShortCodeGeneratorService shortCodeGeneratorService, UrlVerifier urlVerifier) {
+        this.urlRepository = urlRepository;
+        this.shortCodeGeneratorService = shortCodeGeneratorService;
+        this.urlVerifier = urlVerifier;
+    }
 
     public String generator(String url, User user){
 

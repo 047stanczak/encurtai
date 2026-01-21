@@ -9,10 +9,12 @@ import com.encurtai.repository.UrlRepository;
 @Service
 public class ShortCodeGeneratorService {
 
-    @Autowired
-    private UrlRepository urlRepository;
-
+    private final UrlRepository urlRepository;
     private static final int SIZE = 8;
+
+    public ShortCodeGeneratorService(UrlRepository urlRepository) {
+        this.urlRepository = urlRepository;
+    }
 
     public String generate(){
         String hash;

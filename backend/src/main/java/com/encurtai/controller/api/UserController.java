@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PatchMapping("/update")
     public ResponseEntity<ApiResponse<Object>> updateUser(@RequestBody UserDTO userDTO ,@AuthenticationPrincipal User user){
