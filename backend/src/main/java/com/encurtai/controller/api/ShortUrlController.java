@@ -1,5 +1,6 @@
 package com.encurtai.controller.api;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +30,20 @@ public class ShortUrlController {
     @PostMapping("/url")
     public ResponseEntity<ApiResponse<Object>> urlGenerator(@RequestBody UrlGeneratorDTO urlGeneratorDTO, @AuthenticationPrincipal User user){
         String hash = urlGeneratorService.generator(urlGeneratorDTO.url(), user);
-        return ResponseEntity.ok(ApiResponse.urlGenerated("Url gerada com sucesso", hash));
+        return ResponseEntity
+                .status(201)
+                .body(ApiResponse.urlGenerated("Url gerada com sucesso", hash));
     }
 
     @GetMapping("/urls")
-    public List<UrlDTO> myUrls(@AuthenticationPrincipal User user){
+    public ResponseEntity<ApiResponse<Object>> myUrls(@AuthenticationPrincipal User user){
         List<UrlDTO> urls = urlService.getUrls(user);
-        return urls;
+        return ResponseEntity.ok(ApiResponse.ok("URL encontradas", urls));
     }
 
     @DeleteMapping("/url/{id}")
-    public ResponseEntity<ApiResponse<Object>> deleteUrl(@PathVariable Long id, @AuthenticationPrincipal User user){
+    public ResponseEntity<Object> deleteUrl(@PathVariable Long id, @AuthenticationPrincipal User user){
         urlService.deleteUrl(id, user);
-        return ResponseEntity
-                .status(204)
-                .body(ApiResponse.ok("URL excluída com sucesso"));
+        return ResponseEntity.noContent().build();
     }
 }
