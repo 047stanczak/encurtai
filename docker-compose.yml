@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  encurtai-postgres:
+    image: postgres:16
+    container_name: encurtai-postgres
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - encurtai_postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  encurtai-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: encurtai-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - encurtai-postgres
+    networks:
+      - internal
+      - proxy
+
+  encurtai-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: encurtai-frontend
+    restart: unless-stopped
+    networks:
+      - proxy
+
+networks:
+  internal:
+    driver: bridge
+  proxy:
+    external: true
+
+volumes:
+  encurtai_postgres_data:

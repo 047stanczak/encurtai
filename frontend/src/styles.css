@@ -1,0 +1,160 @@
+:root {
+    --bg: #f5f7fb;
+    --card-bg: #ffffff;
+    --accent: #2563eb;
+    --muted: #6b7280;
+    --radius: 10px;
+    --gap: 1rem;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body,
+#root {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: var(--bg);
+    color: #111827;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.card {
+    width: 100%;
+    max-width: 900px;
+    background: var(--card-bg);
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(6px);
+}
+
+h1,
+h2,
+h3 {
+    margin: 0 0 0.5rem 0
+}
+
+p {
+    margin: 0 0 1rem 0;
+    color: var(--muted)
+}
+
+.button,
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    border: 0;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    gap: 0.4rem;
+}
+
+.button-outline,
+button.button-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+
+.card input[type="email"],
+.card input[type="password"],
+.card input[type="text"],
+.card input[type="url"] {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    margin-top: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #e6e9ee;
+    font-size: 0.95rem;
+    background: #fff;
+}
+
+form>*+* {
+    margin-top: 0.6rem
+}
+
+.url-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem
+}
+
+.url-item {
+    padding: 0.65rem;
+    border-radius: 8px;
+    background: #fafafe;
+    border: 1px solid #eef2ff;
+    font-size: 0.95rem;
+}
+
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(2, 6, 23, 0.45);
+    padding: 1rem;
+    z-index: 40;
+}
+
+.popup-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 1rem;
+    border-radius: 12px;
+    background: var(--card-bg);
+    box-shadow: 0 12px 32px rgba(2, 6, 23, 0.25);
+}
+
+:focus {
+    outline: 3px solid rgba(37, 99, 235, 0.18);
+    outline-offset: 2px
+}
+
+button[disabled],
+.button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed
+}
+
+@media (max-width:520px) {
+    .card {
+        padding: 1rem
+    }
+
+    .button {
+        padding: 0.45rem 0.7rem;
+        font-size: 0.92rem
+    }
+}

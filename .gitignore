@@ -12,3 +12,6 @@ database.db
 
 # Build
 out/
+
+# ENV
+*.env
