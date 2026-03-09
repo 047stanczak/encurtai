@@ -47,7 +47,7 @@ class AuthControllerTest {
 
         String json = objectMapper.writeValueAsString(userDTO);
 
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/api/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isOk())

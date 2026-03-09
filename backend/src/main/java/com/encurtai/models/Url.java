@@ -22,7 +22,7 @@ public class Url {
     @Column(nullable = false, updatable = false)
     private String url;
 
-    private long views = 0;
+    private Long views = 0L;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)

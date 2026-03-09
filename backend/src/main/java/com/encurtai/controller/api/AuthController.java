@@ -38,7 +38,7 @@ public class AuthController {
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return ResponseEntity.ok(ApiResponse.ok("Login realizado com sucesso"));
+        return ResponseEntity.ok(ApiResponse.ok("Login realizado com sucesso", token));
     }
 
     @PostMapping("/register")

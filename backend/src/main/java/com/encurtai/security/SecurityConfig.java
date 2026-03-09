@@ -30,11 +30,11 @@ public class SecurityConfig {
         httpSecurity
             .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-            .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(HttpMethod.POST, "/api/login", "/api/register").permitAll()
-                    .requestMatchers("/", "/{hash}").permitAll()
-                    .requestMatchers("/api/**").authenticated()
-            )
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.POST, "/api/login", "/api/register").permitAll()
+                        .requestMatchers("/api/**").authenticated()
+                        .anyRequest().permitAll()
+                )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
             return httpSecurity.build();
     }
