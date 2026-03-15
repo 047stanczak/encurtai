@@ -1,9 +1,11 @@
 package com.encurtai.validation;
 
+import org.springframework.stereotype.Component;
+
 import com.encurtai.exception.InvalidUrlException;
 import com.encurtai.repository.BlockedUrlRepository;
 
-
+@Component
 public class UrlBlockedValidator {
 
     private final BlockedUrlRepository blockedUrlRepository;

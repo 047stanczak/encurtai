@@ -1,12 +1,11 @@
 package com.encurtai.services;
 
-import org.springframework.stereotype.Service;
-
+import org.springframework.stereotype.Component;
 import com.encurtai.exception.UrlDuplicatedException;
 import com.encurtai.models.User;
 import com.encurtai.repository.UrlRepository;
 
-@Service
+@Component
 public class UrlVerifier {
 
     private final UrlRepository urlRepository;

@@ -1,5 +1,8 @@
 package com.encurtai.validation;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UrlNormalize {
     public static String normalize(String url){
 
