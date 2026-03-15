@@ -1,14 +1,11 @@
 package com.encurtai.services;
 
 import java.util.List;
-import java.util.Optional;
-
 import com.encurtai.exception.UrlAccessDeniedException;
 import com.encurtai.exception.UrlByHashNotFoundException;
 import com.encurtai.exception.UrlByIdNotFoundException;
 import com.encurtai.models.Url;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.encurtai.dto.UrlDTO;

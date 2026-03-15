@@ -8,7 +8,6 @@ import com.encurtai.models.User;
 import com.encurtai.repository.UserRepository;
 import com.encurtai.security.TokenSecurity;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

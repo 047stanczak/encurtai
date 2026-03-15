@@ -63,4 +63,11 @@ public class GlobalExceptionHandler {
                 .status(400)
                 .body(ApiResponse.error(400, ex.getMessage()));
     }
+
+    @ExceptionHandler(UrlBlockedNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleUrlBlockedNotFound(UrlBlockedNotFoundException ex) {
+        return ResponseEntity
+                .status(404)
+                .body(ApiResponse.error(404, ex.getMessage()));
+    }
 }

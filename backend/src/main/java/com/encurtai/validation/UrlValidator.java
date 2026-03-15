@@ -1,21 +1,27 @@
 package com.encurtai.validation;
 
 import com.encurtai.exception.InvalidUrlException;
-import org.springframework.stereotype.Service;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class UrlValidator {
 
-    public static String validateAndNormalize(String url){
+    private final UrlBlockedValidator urlBlockedValidator;
+
+    public UrlValidator(UrlBlockedValidator urlBlockedValidator) {
+        this.urlBlockedValidator = urlBlockedValidator;
+    }
+
+
+
+    public String urlValidator(String url){
         if (url == null || url.isBlank()) {
             throw new IllegalArgumentException("URL vazia");
         }
 
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            url = "https://" + url;
-        }
+        url = UrlNormalize.normalize(url);
+        
+        urlBlockedValidator.urlBlockedChecker(url);
 
         try {
             URI uri = new URI(url);
@@ -23,7 +29,6 @@ public class UrlValidator {
             if (uri.getHost() == null) {
                 throw new InvalidUrlException("URL inválida");
             }
-
             return url;
 
         } catch (URISyntaxException e) {
