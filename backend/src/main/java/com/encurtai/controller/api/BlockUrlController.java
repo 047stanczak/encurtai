@@ -15,6 +15,8 @@ import com.encurtai.api.ApiResponse;
 import com.encurtai.dto.BlockUrlDTO;
 import com.encurtai.services.BlockUrlService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/blockurl")
 public class BlockUrlController {
@@ -27,7 +29,7 @@ public class BlockUrlController {
 
     @PostMapping
     public ResponseEntity<ApiResponse<Object>> blockUrl(
-        @RequestBody BlockUrlDTO blockUrlDTO
+        @Valid @RequestBody BlockUrlDTO blockUrlDTO
     ){
         
         blockUrlService.blockUrl(blockUrlDTO);
@@ -44,7 +46,7 @@ public class BlockUrlController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Object>> deleteBlockedUrl(@PathVariable Long id){
+    public ResponseEntity<Void> deleteBlockedUrl(@PathVariable Long id){
         blockUrlService.deleteBlockedUrl(id);
         return ResponseEntity.noContent().build();
     }

@@ -4,6 +4,8 @@ import com.encurtai.api.ApiResponse;
 import com.encurtai.dto.UserDTO;
 import com.encurtai.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<Object>> login(
-            @RequestBody UserDTO user,
+            @Valid @RequestBody UserDTO user,
             HttpServletResponse response) {
 
         String token = userService.login(user);
@@ -42,7 +44,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<Object>> register(@RequestBody UserDTO user){
+    public ResponseEntity<ApiResponse<Object>> register(@Valid @RequestBody UserDTO user){
         userService.register(user);
         return ResponseEntity
                 .status(201)

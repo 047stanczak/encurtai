@@ -13,6 +13,8 @@ import com.encurtai.models.User;
 import com.encurtai.services.UrlGeneratorService;
 import com.encurtai.services.UrlService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 public class ShortUrlController {
@@ -26,7 +28,9 @@ public class ShortUrlController {
 
 
     @PostMapping("/url")
-    public ResponseEntity<ApiResponse<Object>> urlGenerator(@RequestBody UrlGeneratorDTO urlGeneratorDTO, @AuthenticationPrincipal User user){
+    public ResponseEntity<ApiResponse<Object>> urlGenerator(
+        @Valid @RequestBody UrlGeneratorDTO urlGeneratorDTO,
+        @AuthenticationPrincipal User user){
         String hash = urlGeneratorService.generator(urlGeneratorDTO.url(), user);
         return ResponseEntity
                 .status(201)
@@ -40,7 +44,7 @@ public class ShortUrlController {
     }
 
     @DeleteMapping("/url/{id}")
-    public ResponseEntity<Object> deleteUrl(@PathVariable Long id, @AuthenticationPrincipal User user){
+    public ResponseEntity<Void> deleteUrl(@PathVariable Long id, @AuthenticationPrincipal User user){
         urlService.deleteUrl(id, user);
         return ResponseEntity.noContent().build();
     }

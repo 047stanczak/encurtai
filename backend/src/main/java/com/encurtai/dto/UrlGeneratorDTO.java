@@ -1,3 +1,7 @@
 package com.encurtai.dto;
 
-public record UrlGeneratorDTO(String url) {}
+import jakarta.validation.constraints.NotBlank;
+
+public record UrlGeneratorDTO(
+    @NotBlank(message = "URL não pode estar vazia")
+    String url) {}

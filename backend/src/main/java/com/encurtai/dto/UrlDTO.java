@@ -1,3 +1,7 @@
 package com.encurtai.dto;
 
-public record UrlDTO(Long id, String hash, String url, Long views) {}
+public record UrlDTO(
+    Long id, 
+    String hash, 
+    String url, 
+    Long views) {}
