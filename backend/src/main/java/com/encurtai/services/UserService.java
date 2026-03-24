@@ -1,9 +1,11 @@
 package com.encurtai.services;
 
+import com.encurtai.dto.UserChangePasswordDTO;
 import com.encurtai.dto.UserDTO;
 import com.encurtai.exception.EmailAlreadyExistsException;
 import com.encurtai.exception.InvalidCredentialsException;
 import com.encurtai.exception.UserNotFoundException;
+import com.encurtai.models.Roles;
 import com.encurtai.models.User;
 import com.encurtai.repository.UserRepository;
 import com.encurtai.security.TokenSecurity;
@@ -33,6 +35,7 @@ public class UserService {
         User newUser = new User();
         newUser.setEmail(user.email());
         newUser.setPassword(passwordEncoder.encode(user.password()));
+        newUser.setRoles(Roles.USER);
         userRepository.save(newUser);
     }
 
@@ -56,15 +59,13 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(User user, UserDTO userDTO){
-        if (userDTO.email() != null && !userDTO.email().isBlank()) {
-            user.setEmail(userDTO.email());
-        }
+    public void updateUser(User user, UserChangePasswordDTO userChangePasswordDTO){
 
-        if (userDTO.password() != null && !userDTO.password().isBlank()) {
-            user.setPassword(passwordEncoder.encode(userDTO.password()));
-        }
-
-        userRepository.save(user);
-    }
+            if(passwordEncoder.matches(userChangePasswordDTO.password(), user.getPassword())){
+                user.setPassword(passwordEncoder.encode(userChangePasswordDTO.newPassword()));
+                userRepository.save(user);
+            } else {
+                throw new InvalidCredentialsException("Senha atual inválida");
+            }
+    } 
 }

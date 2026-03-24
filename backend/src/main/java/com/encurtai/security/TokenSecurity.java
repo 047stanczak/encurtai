@@ -15,7 +15,7 @@ import com.encurtai.models.User;
 
 @Service
 public class TokenSecurity {
-    @Value("${JWT_SECRET_KEY}")
+    @Value("${jwt.secret-key}")
     private String secret;
 
     public String generateToken(User user){
