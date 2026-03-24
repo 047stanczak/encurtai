@@ -56,5 +56,23 @@ class AuthControllerTest {
 
     }
 
+    @Test
+    void shouldRegisterUser() throws Exception {
+        String json = objectMapper.writeValueAsString(userDTO);
+
+        mockMvc.perform(post("/api/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.message").value("Registro feito com sucesso"));
+    }
+
+@Test
+void shouldLogoutUser() throws Exception {
+        mockMvc.perform(post("/api/logout"))
+                        .andExpect(status().isOk())
+                        .andExpect(header().string("Set-Cookie", "token=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; SameSite=Lax; Secure; HttpOnly"));
+}
+
 
 }
