@@ -1,38 +1,28 @@
 package com.encurtai.validation;
 
-import com.encurtai.exception.InvalidUrlException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import org.springframework.stereotype.Component;
 
+import com.encurtai.exception.InvalidUrlException;
+
+@Component
 public class UrlValidator {
 
     private final UrlBlockedValidator urlBlockedValidator;
+    private final UrlNormalize urlNormalize;
 
-    public UrlValidator(UrlBlockedValidator urlBlockedValidator) {
+    public UrlValidator(UrlBlockedValidator urlBlockedValidator, UrlNormalize urlNormalize) {
         this.urlBlockedValidator = urlBlockedValidator;
+        this.urlNormalize = urlNormalize;
     }
 
-
-
-    public String urlValidator(String url){
+    public String urlValidator(String url) {
         if (url == null || url.isBlank()) {
-            throw new IllegalArgumentException("URL vazia");
+            throw new InvalidUrlException("URL vazia");
         }
 
-        url = UrlNormalize.normalize(url);
-        
-        urlBlockedValidator.urlBlockedChecker(url);
+        String normalizedUrl = urlNormalize.canonicalize(url);
+        urlBlockedValidator.urlBlockedChecker(normalizedUrl);
 
-        try {
-            URI uri = new URI(url);
-
-            if (uri.getHost() == null) {
-                throw new InvalidUrlException("URL inválida");
-            }
-            return url;
-
-        } catch (URISyntaxException e) {
-            throw new InvalidUrlException("URL inválida");
-        }
+        return normalizedUrl;
     }
 }
