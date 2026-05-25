@@ -13,20 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -56,7 +52,7 @@ class AuthControllerTest {
     );
 
     @Test
-    void shouldReturnTokenAndSetCookieOnLogin() throws Exception {
+    void shouldReturnTokenOnLogin() throws Exception {
         when(userService.login(any(UserDTO.class)))
                 .thenReturn("jwt-token");
 
@@ -69,13 +65,7 @@ class AuthControllerTest {
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.status").value(200))
                 .andExpect(jsonPath("$.message").value("Login realizado com sucesso"))
-                .andExpect(jsonPath("$.data").value("jwt-token"))
-                .andExpect(header().string(HttpHeaders.SET_COOKIE, allOf(
-                        containsString("token=jwt-token"),
-                        containsString("Path=/"),
-                        containsString("HttpOnly"),
-                        containsString("SameSite=Lax")
-                )));
+                .andExpect(jsonPath("$.data").value("jwt-token"));
 
         verify(userService).login(any(UserDTO.class));
     }
@@ -147,15 +137,11 @@ class AuthControllerTest {
     }
 
     @Test
-    void shouldClearTokenCookieOnLogout() throws Exception {
+    void shouldReturnSuccessOnLogout() throws Exception {
         mockMvc.perform(post("/api/logout"))
                 .andExpect(status().isOk())
-                .andExpect(header().string(HttpHeaders.SET_COOKIE, allOf(
-                        containsString("token="),
-                        containsString("Max-Age=0"),
-                        containsString("Path=/"),
-                        containsString("HttpOnly"),
-                        containsString("SameSite=Lax")
-                )));
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.message").value("Logout realizado com sucesso"));
     }
 }

@@ -2,7 +2,6 @@ package com.encurtai.security;
 
 import java.io.IOException;
 
-import jakarta.servlet.http.Cookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -61,13 +60,16 @@ public class SecurityFilter extends OncePerRequestFilter {
 
 
     private String recoverToken(HttpServletRequest request) {
-        if (request.getCookies() == null) return null;
-
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("token")) {
-                return cookie.getValue();
-            }
+        String authHeader = request.getHeader("Authorization");
+        
+        if (authHeader == null || authHeader.isBlank()) {
+            return null;
         }
+        
+        if (authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+        
         return null;
     }
 }

@@ -3,15 +3,10 @@ package com.encurtai.controller.api;
 import com.encurtai.api.ApiResponse;
 import com.encurtai.dto.UserDTO;
 import com.encurtai.services.UserService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.Duration;
 
 @RestController
 @RequestMapping("/api")
@@ -25,20 +20,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<Object>> login(
-            @Valid @RequestBody UserDTO user,
-            HttpServletResponse response) {
+            @Valid @RequestBody UserDTO user) {
 
         String token = userService.login(user);
-
-        ResponseCookie cookie = ResponseCookie.from("token", token)
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .sameSite("Lax")
-                .maxAge(Duration.ofMinutes(15))
-                .build();
-
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return ResponseEntity.ok(ApiResponse.ok("Login realizado com sucesso", token));
     }
@@ -52,15 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-        public void logout(HttpServletResponse response) {
-            ResponseCookie cookie = ResponseCookie.from("token", "")
-                    .httpOnly(true)
-                    .secure(true)
-                    .path("/")
-                    .sameSite("Lax")
-                    .maxAge(0)
-                    .build();
-
-            response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        }
+    public ResponseEntity<ApiResponse<Void>> logout() {
+        return ResponseEntity.ok(ApiResponse.ok("Logout realizado com sucesso", null));
+    }
 }
