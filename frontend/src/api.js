@@ -27,7 +27,7 @@ async function handleResponse(res) {
     throw new Error(message);
   }
 
-  return json?.data ?? json; 
+  return json;
 }
 
 export async function login(email, password) {
@@ -37,8 +37,8 @@ export async function login(email, password) {
     body: JSON.stringify({ email, password }),
   });
   const result = await handleResponse(res);
-  if (result && typeof result === 'string') {
-    localStorage.setItem("token", result);
+  if (result?.data && typeof result.data === 'string') {
+    localStorage.setItem("token", result.data);
   }
   return result;
 }
@@ -49,7 +49,8 @@ export async function register(email, password) {
     method: "POST",
     body: JSON.stringify({ email, password }),
   });
-  return handleResponse(res);
+  const result = await handleResponse(res);
+  return result;
 }
 
 export async function shortenUrl(originalUrl) {
@@ -59,7 +60,8 @@ export async function shortenUrl(originalUrl) {
     method: "POST",
     body: JSON.stringify({ url: originalUrl }),
   });
-  return handleResponse(res);
+  const result = await handleResponse(res);
+  return result.data ?? result;
 }
 
 export async function getUserUrls() {
@@ -68,7 +70,8 @@ export async function getUserUrls() {
     headers: getAuthHeaders(),
     method: "GET",
   });
-  return handleResponse(res);
+  const result = await handleResponse(res);
+  return result.data ?? result;
 }
 
 export async function logout() {
@@ -78,5 +81,6 @@ export async function logout() {
     method: "POST",
   });
   localStorage.removeItem("token");
-  return handleResponse(res);
+  const result = await handleResponse(res);
+  return result;
 }
