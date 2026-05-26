@@ -1,0 +1,340 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Encurtai API
+meta:
+  id: wrk_d59edab15b344a17b9be21c1ab9587c4
+  created: 1779752260587
+  modified: 1779752260587
+  description: ""
+collection:
+  - url: ""
+    name: New Request
+    meta:
+      id: req_8377a5efb3c2418190e8c0f2f0dd4717
+      created: 1779755906031
+      modified: 1779755940047
+      isPrivate: false
+      description: ""
+      sortKey: -1779755906031
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.6.0
+        description: ""
+        disabled: false
+    scripts:
+      afterResponse: |+
+        
+        insomnia.test('Check if status is 200', () => {
+            insomnia.expect(insomnia.response.code).to.eql(200);
+        });
+
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - name: Short URL
+    meta:
+      id: fld_5c55891ab2ec4705b6352ae253650b72
+      created: 1700000000000
+      modified: 1700000000000
+      sortKey: -1500000000000
+      description: ShortUrlController
+    children:
+      - url: "{{ _.base_url }}/api/url/1"
+        name: Delete Short URL
+        meta:
+          id: req_026a4a4e4ce3444099124f0274de0b28
+          created: 1700000000000
+          modified: 1779755673080
+          isPrivate: false
+          description: ""
+          sortKey: -1500000000000
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/urls"
+        name: List My URLs
+        meta:
+          id: req_daa28b4d43e748868432fb333e89fdff
+          created: 1700000000000
+          modified: 1779756537463
+          isPrivate: false
+          description: ""
+          sortKey: -1600000000000
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/url"
+        name: Generate Short URL
+        meta:
+          id: req_ed3858becfd1413cae2cf53a79e4b9ad
+          created: 1700000000000
+          modified: 1700000000000
+          isPrivate: false
+          description: ""
+          sortKey: -1700000000000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"url": "https://www.google.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Auth
+    meta:
+      id: fld_863ef523ea094017ab04d091c080037b
+      created: 1700000000000
+      modified: 1779756561405
+      sortKey: -1700000000000
+      description: AuthController
+    children:
+      - url: "{{ _.base_url }}/api/login"
+        name: Login
+        meta:
+          id: req_194cd74c12864cd38858eb5896e969d0
+          created: 1700000000000
+          modified: 1779756473198
+          isPrivate: false
+          description: ""
+          sortKey: -1600000000000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "test@encurtai.com",
+            	"password": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        scripts:
+          afterResponse: |-
+            
+            insomnia.test('Check if status is 200', () => {
+                insomnia.expect(insomnia.response.code).to.eql(200);
+            		const body = insomnia.response.json();
+            		insomnia.expect(body.success).to.equal(true);
+
+
+
+            insomnia.environment.set("user", "variable_value");
+
+
+
+            });
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/register"
+        name: Register User
+        meta:
+          id: req_41765c6b53f14e2693076f5d3e9c4cf0
+          created: 1700000000000
+          modified: 1779752265902
+          isPrivate: false
+          description: ""
+          sortKey: -1700000000000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "John Doe",
+            	"email": "test@encurtai.com",
+            	"password": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/logout"
+        name: Logout
+        meta:
+          id: req_b2e1a59402394fc29b3a4acfc0e5129e
+          created: 1700000000000
+          modified: 1700000000000
+          isPrivate: false
+          description: ""
+          sortKey: -1500000000000
+        method: POST
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: User
+    meta:
+      id: fld_9578a81863a646ffa5262bd1071dc616
+      created: 1700000000000
+      modified: 1700000000000
+      sortKey: -1400000000000
+      description: UserController
+    children:
+      - url: "{{ _.base_url }}/api/update"
+        name: Update Password
+        meta:
+          id: req_4ff7232c74f74682bd0b105f70fce24f
+          created: 1700000000000
+          modified: 1779755740339
+          isPrivate: false
+          description: ""
+          sortKey: -1700000000000
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"password": "123456",
+            	"newPassword": "novaSenha123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Block URL
+    meta:
+      id: fld_f74154a2c9a840719a543a25639a853d
+      created: 1700000000000
+      modified: 1700000000000
+      sortKey: -1600000000000
+      description: BlockUrlController
+    children:
+      - url: "{{ _.base_url }}/api/blockurl"
+        name: List Blocked URLs
+        meta:
+          id: req_3e8d5da7047c478a981fbd2525f9f565
+          created: 1700000000000
+          modified: 1700000000000
+          isPrivate: false
+          description: ""
+          sortKey: -1600000000000
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/blockurl/1"
+        name: Delete Blocked URL
+        meta:
+          id: req_5295931ecade420186cfc2e541aaa461
+          created: 1700000000000
+          modified: 1700000000000
+          isPrivate: false
+          description: ""
+          sortKey: -1500000000000
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/blockurl"
+        name: Block a URL
+        meta:
+          id: req_c4c8556aecdc468c8fb1b945d26e4242
+          created: 1700000000000
+          modified: 1700000000000
+          isPrivate: false
+          description: ""
+          sortKey: -1700000000000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"url": "https://sitenaoconfiavel.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_907d56d3b927eb449ba1a625a54d3da3a4f3139c
+    created: 1779752260799
+    modified: 1779756561403
+  cookies:
+    - id: 6bb2b824-d9ea-4bec-bc4a-f423c1e5e231
+      key: token
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmN1cnRhaSIsInN1YiI6InRlc3RAZW5jdXJ0YWkuY29tIiwiaWQiOjEsImV4cCI6MTc3OTc1NzQ2MX0.CT5iLQNvfXs9rhuOeTwtq_DGHhe9vCQK1ZgU5uByE4A
+      domain: localhost
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: true
+environments:
+  name: Base Environment
+  meta:
+    id: env_dbb1d5ce87904008bc7003edafaf75bc
+    created: 1700000000000
+    modified: 1779756561404
+    isPrivate: false
+  data:
+    base_url: http://localhost:8080
+    user: variable_value
