@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: encurtai-config
+data:
+  SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+  SPRING_JPA_SHOW_SQL: "false"
+  LOGGING_LEVEL_ROOT: "INFO"
+  POSTGRES_DB: "encurtai_db"
+  POSTGRES_USER: "encurtai_user"
